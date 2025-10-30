@@ -51,6 +51,7 @@ watcher_loop(State = #state{mfa = {Module, Function, Args}, child = {ChildPid, R
 
             NewState = State#state{status = {restarting, Reason}},
 
+            %% Delay spawning a new child to test status reporting
             erlang:send_after(5000, self(), spawn_child),
             watcher_loop(NewState);
         
